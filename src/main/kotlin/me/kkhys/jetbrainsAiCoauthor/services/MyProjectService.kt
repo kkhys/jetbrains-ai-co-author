@@ -1,9 +1,9 @@
-package com.github.kkhys.jetbrainsaicoauthor.services
+package me.kkhys.jetbrainsAiCoauthor.services
 
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
-import com.github.kkhys.jetbrainsaicoauthor.MyBundle
+import me.kkhys.jetbrainsAiCoauthor.MyBundle
 
 @Service(Service.Level.PROJECT)
 class MyProjectService(project: Project) {

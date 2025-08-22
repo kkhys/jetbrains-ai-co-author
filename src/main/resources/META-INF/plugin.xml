@@ -11,5 +11,6 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="me.kkhys.jetbrainsAiCoauthor.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <postStartupActivity implementation="me.kkhys.jetbrainsAiCoauthor.startup.MyProjectActivity" />
+        <checkinHandlerFactory implementation="me.kkhys.jetbrainsAiCoauthor.vcs.CommitMessageAiAssistant"/>
     </extensions>
 </idea-plugin>

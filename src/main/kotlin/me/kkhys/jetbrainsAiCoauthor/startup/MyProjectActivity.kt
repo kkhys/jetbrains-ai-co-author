@@ -1,4 +1,4 @@
-package com.github.kkhys.jetbrainsaicoauthor.startup
+package me.kkhys.jetbrainsAiCoauthor.startup
 
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project

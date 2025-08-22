@@ -1,4 +1,4 @@
-package com.github.kkhys.jetbrainsaicoauthor
+package me.kkhys.jetbrainsAiCoauthor
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
