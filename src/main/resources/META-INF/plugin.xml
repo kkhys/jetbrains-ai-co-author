@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.kkhys.jetbrainsaicoauthor</id>
+    <id>me.kkhys.jetbrainsAiCoauthor</id>
     <name>jetbrains-ai-co-author</name>
     <vendor>kkhys</vendor>
 
@@ -9,7 +9,7 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.kkhys.jetbrainsaicoauthor.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.kkhys.jetbrainsaicoauthor.startup.MyProjectActivity" />
+        <toolWindow factoryClass="me.kkhys.jetbrainsAiCoauthor.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <postStartupActivity implementation="me.kkhys.jetbrainsAiCoauthor.startup.MyProjectActivity" />
     </extensions>
 </idea-plugin>
