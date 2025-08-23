@@ -9,16 +9,15 @@ import javax.swing.JTextArea
 
 /**
  * Service for finding commit message text fields in the UI
- * 
+ *
  * @description Specialized service for locating commit message text components
  *              within IntelliJ's UI hierarchy using heuristic detection
  * @since 1.0.0
  */
 class CommitMessageFieldFinder {
-    
     /**
      * Finds and returns the first commit message field found in the UI
-     * 
+     *
      * @return The commit message text component or null if not found
      */
     fun findCommitMessageField(): Component? {
@@ -35,10 +34,10 @@ class CommitMessageFieldFinder {
             null
         }
     }
-    
+
     /**
      * Recursively searches the component tree for commit message fields
-     * 
+     *
      * @param component The root component to search from
      * @return The first commit message field found, or null
      */
@@ -65,10 +64,10 @@ class CommitMessageFieldFinder {
         }
         return null
     }
-    
+
     /**
      * Determines if a component is likely a commit message field using heuristics
-     * 
+     *
      * @param component The component to evaluate
      * @return true if the component appears to be a commit message field
      */
@@ -76,23 +75,23 @@ class CommitMessageFieldFinder {
         return when (component) {
             is EditorTextField -> {
                 val text = component.text
-                component.isVisible && 
-                (text.isEmpty() || text.length < CoAuthorConfig.MAX_COMMIT_MESSAGE_LENGTH)
+                component.isVisible &&
+                    (text.isEmpty() || text.length < CoAuthorConfig.MAX_COMMIT_MESSAGE_LENGTH)
             }
             is JTextArea -> {
                 val text = component.text ?: ""
-                component.isVisible && 
-                component.isEditable && 
-                component.rows > CoAuthorConfig.MIN_TEXTAREA_ROWS &&
-                (text.isEmpty() || text.length < CoAuthorConfig.MAX_COMMIT_MESSAGE_LENGTH)
+                component.isVisible &&
+                    component.isEditable &&
+                    component.rows > CoAuthorConfig.MIN_TEXTAREA_ROWS &&
+                    (text.isEmpty() || text.length < CoAuthorConfig.MAX_COMMIT_MESSAGE_LENGTH)
             }
             else -> false
         }
     }
-    
+
     /**
      * Gets the current text from a text component
-     * 
+     *
      * @param component The text component
      * @return The current text content, or empty string if invalid component
      */
@@ -103,15 +102,18 @@ class CommitMessageFieldFinder {
             else -> ""
         }
     }
-    
+
     /**
      * Sets text in a text component
-     * 
+     *
      * @param component The text component to update
      * @param text The new text content
      * @return true if the text was set successfully
      */
-    fun setTextInComponent(component: Component, text: String): Boolean {
+    fun setTextInComponent(
+        component: Component,
+        text: String,
+    ): Boolean {
         return try {
             when (component) {
                 is EditorTextField -> {
