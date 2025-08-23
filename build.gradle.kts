@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0" // Ktlint Plugin
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -127,6 +128,22 @@ kover {
     }
 }
 
+// Configure Ktlint
+ktlint {
+    android = false
+    ignoreFailures = false
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.JSON)
+    }
+    filter {
+        exclude { element ->
+            // より柔軟な行長制限を適用
+            element.file.path.contains("build.gradle")
+        }
+    }
+}
+
 tasks {
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
@@ -134,6 +151,11 @@ tasks {
 
     publishPlugin {
         dependsOn(patchChangelog)
+    }
+
+    // Run ktlint check before build
+    check {
+        dependsOn("ktlintCheck")
     }
 }
 
