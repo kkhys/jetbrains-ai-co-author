@@ -159,15 +159,6 @@ tasks {
     check {
         dependsOn("ktlintCheck")
     }
-
-    buildSearchableOptions {
-        jvmArgs(
-            "-Duser.language=en",
-            "-Duser.country=US",
-            "-Djava.awt.headless=true"
-        )
-    }
-
 }
 
 intellijPlatformTesting {
