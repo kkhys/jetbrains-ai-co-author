@@ -2,7 +2,6 @@ package me.kkhys.jetbrainsAiCoauthor.vcs
 
 import com.intellij.openapi.vcs.checkin.CheckinHandler
 import com.intellij.openapi.vcs.checkin.CheckinHandlerFactory
-import com.intellij.openapi.ui.Messages
 
 /**
  * CheckinHandlerFactory that provides AI-assisted commit message generation functionality
@@ -29,32 +28,10 @@ class CommitMessageAiAssistant : CheckinHandlerFactory() {
     }
     
     /**
-     * CheckinHandler implementation with AI assistance features
+     * Simple CheckinHandler - the actual UI button is provided by GenerateCommitMessageAction
      */
     private class AiAssistantCheckinHandler : CheckinHandler() {
-        
-        /**
-         * Pre-commit processing - demonstration purposes
-         * 
-         * @description Currently displays a demo message about AI functionality during commits
-         *              Future plans include implementing more advanced AI assistance features
-         * @return Whether to continue or cancel the commit
-         */
-        override fun beforeCheckin(): ReturnResult {
-            // Demo: Notify user about AI Co-Author availability
-            val response = Messages.showYesNoDialog(
-                "AI Co-Author: Commit message generation feature is available.\n\n" +
-                "In the future, you will be able to auto-generate commit messages with one click.\n\n" +
-                "Do you want to continue with this commit?",
-                "AI Co-Author",
-                Messages.getQuestionIcon()
-            )
-            
-            return if (response == Messages.YES) {
-                ReturnResult.COMMIT
-            } else {
-                ReturnResult.CANCEL
-            }
-        }
+        // This handler ensures AI Co-Author is available in the VCS workflow
+        // The visible button is implemented as a VCS action in GenerateCommitMessageAction
     }
 }

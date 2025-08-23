@@ -12,5 +12,15 @@
         <toolWindow factoryClass="me.kkhys.jetbrainsAiCoauthor.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <postStartupActivity implementation="me.kkhys.jetbrainsAiCoauthor.startup.MyProjectActivity" />
         <checkinHandlerFactory implementation="me.kkhys.jetbrainsAiCoauthor.vcs.CommitMessageAiAssistant"/>
+        <notificationGroup id="AI Co-Author" displayType="BALLOON"/>
     </extensions>
+    
+    <actions>
+        <action id="AddAiCoAuthor" 
+                class="me.kkhys.jetbrainsAiCoauthor.actions.GenerateCommitMessageAction"
+                text="🤖 Add AI Co-Author"
+                description="Add Claude as co-author to your commit message">
+            <add-to-group group-id="Vcs.MessageActionGroup" anchor="after" relative-to-action="Vcs.ShowMessageHistory"/>
+        </action>
+    </actions>
 </idea-plugin>
