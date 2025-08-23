@@ -6,11 +6,7 @@
 
     <depends>com.intellij.modules.platform</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
-
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="me.kkhys.jetbrainsAiCoauthor.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="me.kkhys.jetbrainsAiCoauthor.startup.MyProjectActivity" />
         <checkinHandlerFactory implementation="me.kkhys.jetbrainsAiCoauthor.vcs.CommitMessageAiAssistant"/>
         <notificationGroup id="AI Co-Author" displayType="BALLOON"/>
     </extensions>
