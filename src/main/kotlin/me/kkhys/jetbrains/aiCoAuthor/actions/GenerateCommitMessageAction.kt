@@ -1,4 +1,4 @@
-package me.kkhys.jetbrainsAiCoauthor.actions
+package me.kkhys.jetbrains.aiCoAuthor.actions
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
