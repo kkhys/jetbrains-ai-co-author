@@ -1,9 +1,9 @@
-package me.kkhys.jetbrains.aiCoAuthor.services
+package me.kkhys.aiCoAuthor.services
 
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
-import me.kkhys.jetbrains.aiCoAuthor.config.CoAuthorConfig
+import me.kkhys.aiCoAuthor.config.CoAuthorConfig
 
 /**
  * Service for handling plugin notifications

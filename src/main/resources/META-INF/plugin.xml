@@ -7,13 +7,13 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <checkinHandlerFactory implementation="me.kkhys.jetbrains.aiCoAuthor.vcs.CommitMessageAiAssistant"/>
+        <checkinHandlerFactory implementation="me.kkhys.aiCoAuthor.vcs.CommitMessageAiAssistant"/>
         <notificationGroup id="AI Co-Author" displayType="BALLOON"/>
     </extensions>
     
     <actions>
         <action id="AddAiCoAuthor" 
-                class="me.kkhys.jetbrains.aiCoAuthor.actions.GenerateCommitMessageAction"
+                class="me.kkhys.aiCoAuthor.actions.GenerateCommitMessageAction"
                 text="🤖 Add AI Co-Author"
                 description="Add Claude as co-author to your commit message">
             <add-to-group group-id="Vcs.MessageActionGroup" anchor="after" relative-to-action="Vcs.ShowMessageHistory"/>

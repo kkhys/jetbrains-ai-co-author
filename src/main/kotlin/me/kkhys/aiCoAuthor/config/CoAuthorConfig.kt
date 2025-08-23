@@ -1,4 +1,4 @@
-package me.kkhys.jetbrains.aiCoAuthor.config
+package me.kkhys.aiCoAuthor.config
 
 /**
  * Configuration for AI Co-Author functionality

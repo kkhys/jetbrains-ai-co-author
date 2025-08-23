@@ -1,11 +1,11 @@
-package me.kkhys.jetbrains.aiCoAuthor.actions
+package me.kkhys.aiCoAuthor.actions
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.vcs.changes.ChangeListManager
-import me.kkhys.jetbrains.aiCoAuthor.services.AICoAuthorService
-import me.kkhys.jetbrains.aiCoAuthor.services.NotificationService
+import me.kkhys.aiCoAuthor.services.AICoAuthorService
+import me.kkhys.aiCoAuthor.services.NotificationService
 
 /**
  * Action to add AI co-author to commit messages

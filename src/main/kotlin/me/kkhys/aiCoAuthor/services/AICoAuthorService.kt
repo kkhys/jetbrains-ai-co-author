@@ -1,6 +1,6 @@
-package me.kkhys.jetbrains.aiCoAuthor.services
+package me.kkhys.aiCoAuthor.services
 
-import me.kkhys.jetbrains.aiCoAuthor.config.CoAuthorConfig
+import me.kkhys.aiCoAuthor.config.CoAuthorConfig
 import javax.swing.SwingUtilities
 
 /**

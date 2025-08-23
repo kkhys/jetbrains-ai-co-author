@@ -1,7 +1,7 @@
-package me.kkhys.jetbrains.aiCoAuthor.services
+package me.kkhys.aiCoAuthor.services
 
 import com.intellij.ui.EditorTextField
-import me.kkhys.jetbrains.aiCoAuthor.config.CoAuthorConfig
+import me.kkhys.aiCoAuthor.config.CoAuthorConfig
 import java.awt.Component
 import java.awt.Container
 import javax.swing.JFrame

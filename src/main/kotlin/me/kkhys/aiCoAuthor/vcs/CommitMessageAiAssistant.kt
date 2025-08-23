@@ -1,4 +1,4 @@
-package me.kkhys.jetbrains.aiCoAuthor.vcs
+package me.kkhys.aiCoAuthor.vcs
 
 import com.intellij.openapi.vcs.checkin.CheckinHandler
 import com.intellij.openapi.vcs.checkin.CheckinHandlerFactory
