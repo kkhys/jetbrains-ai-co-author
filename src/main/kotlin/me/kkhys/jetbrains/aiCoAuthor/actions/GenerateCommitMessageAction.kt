@@ -16,7 +16,7 @@ import me.kkhys.jetbrains.aiCoAuthor.services.NotificationService
  *              for better separation of concerns and testability.
  * @since 1.0.0
  */
-class GenerateCommitMessageAction : AnAction("🤖 Add AI Co-Author", 
+class GenerateCommitMessageAction : AnAction("Add AI Co-Author",
     "Add Claude as co-author to your commit message", 
     null) {
     
