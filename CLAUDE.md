@@ -32,7 +32,7 @@ This is a JetBrains IntelliJ Platform plugin that adds AI co-author functionalit
 ./gradlew test
 
 # Run specific test
-./gradlew test --tests "me.kkhys.jetbrains.aiCoAuthor.MyPluginTest.testPluginBasics"
+./gradlew test --tests "me.kkhys.jetbrains.aiCoAuthor.AiCoAuthorPluginTest.testProjectInitialization"
 
 # Generate coverage reports
 ./gradlew koverXmlReport
