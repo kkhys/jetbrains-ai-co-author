@@ -1,6 +1,6 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# jetbrains-ai-co-author Changelog
+# ai-co-author Changelog
 
 ## [Unreleased]
 
