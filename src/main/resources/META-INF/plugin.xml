@@ -3,6 +3,7 @@
     <id>me.kkhys.aiCoauthor</id>
     <name>AI Co-Author</name>
     <vendor>kkhys</vendor>
+    <description>AI Co-Author for JetBrains IDEs</description>
 
     <depends>com.intellij.modules.platform</depends>
 
