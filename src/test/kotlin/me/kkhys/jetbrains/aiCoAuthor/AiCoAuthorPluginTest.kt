@@ -3,8 +3,8 @@ package me.kkhys.jetbrains.aiCoAuthor
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.ui.EditorTextField
-import me.kkhys.jetbrains.aiCoAuthor.actions.GenerateCommitMessageAction
-import me.kkhys.jetbrains.aiCoAuthor.vcs.CommitMessageAiAssistant
+import me.kkhys.aiCoAuthor.actions.GenerateCommitMessageAction
+import me.kkhys.aiCoAuthor.vcs.CommitMessageAiAssistant
 import javax.swing.JTextArea
 
 /**
@@ -48,7 +48,7 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
     fun testGenerateCommitMessageActionInitialization() {
         val presentation = generateCommitMessageAction.templatePresentation
 
-        assertEquals("🤖 Add AI Co-Author", presentation.text)
+        assertEquals("Add AI Co-Author", presentation.text)
         assertEquals("Add Claude as co-author to your commit message", presentation.description)
         assertNull("Icon should be null", presentation.icon)
     }
@@ -238,7 +238,7 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
         val action = GenerateCommitMessageAction()
         val presentation = action.templatePresentation
 
-        assertEquals("Action text should be correct", "🤖 Add AI Co-Author", presentation.text)
+        assertEquals("Action text should be correct", "Add AI Co-Author", presentation.text)
         assertEquals(
             "Action description should be correct",
             "Add Claude as co-author to your commit message",
@@ -308,25 +308,25 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
     private fun isLikelyCommitMessageFieldSimulation(
         component: Any,
         text: String,
-    ): Boolean {
-        return when (component) {
+    ): Boolean =
+        when (component) {
             is EditorTextField -> {
-                component.isVisible && (text.isEmpty() || text.length < 1000)
+                component.isVisible &&
+                    (text.isEmpty() || text.length < 1000)
             }
             is JTextArea -> {
-                component.isVisible && component.isEditable && component.rows > 1 &&
+                component.isVisible &&
+                    component.isEditable &&
+                    component.rows > 1 &&
                     (text.isEmpty() || text.length < 1000)
             }
             else -> false
         }
-    }
 
     /**
      * Simulates the duplicate prevention logic for testing
      */
-    private fun shouldAddCoAuthor(text: String): Boolean {
-        return !text.contains("Co-Authored-By: Claude")
-    }
+    private fun shouldAddCoAuthor(text: String): Boolean = !text.contains("Co-Authored-By: Claude")
 
     /**
      * Simulates the text formatting logic for testing
@@ -334,11 +334,10 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
     private fun formatUpdatedText(
         currentText: String,
         coAuthoredBy: String,
-    ): String {
-        return if (currentText.trim().isEmpty()) {
+    ): String =
+        if (currentText.trim().isEmpty()) {
             coAuthoredBy
         } else {
             "${currentText.trim()}\n\n$coAuthoredBy"
         }
-    }
 }

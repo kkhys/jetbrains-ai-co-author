@@ -24,9 +24,7 @@ object CoAuthorConfig {
     fun getCoAuthoredByTrailer(
         name: String = DEFAULT_COAUTHOR_NAME,
         email: String = DEFAULT_COAUTHOR_EMAIL,
-    ): String {
-        return "Co-Authored-By: $name <$email>"
-    }
+    ): String = "Co-Authored-By: $name <$email>"
 
     /**
      * Maximum commit message length for heuristic detection

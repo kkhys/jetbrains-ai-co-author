@@ -22,9 +22,7 @@ class CommitMessageAiAssistant : CheckinHandlerFactory() {
     override fun createHandler(
         panel: com.intellij.openapi.vcs.CheckinProjectPanel,
         commitContext: com.intellij.openapi.vcs.changes.CommitContext,
-    ): CheckinHandler {
-        return AiAssistantCheckinHandler()
-    }
+    ): CheckinHandler = AiAssistantCheckinHandler()
 
     /**
      * Simple CheckinHandler - the actual UI button is provided by GenerateCommitMessageAction
