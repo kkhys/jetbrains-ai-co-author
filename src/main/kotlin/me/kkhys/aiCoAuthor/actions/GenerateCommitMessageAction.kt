@@ -1,63 +1,50 @@
 package me.kkhys.aiCoAuthor.actions
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.vcs.changes.ChangeListManager
-import me.kkhys.aiCoAuthor.services.AICoAuthorService
+import com.intellij.openapi.vcs.VcsDataKeys
+import me.kkhys.aiCoAuthor.config.CoAuthorConfig
 import me.kkhys.aiCoAuthor.services.NotificationService
 
-/**
- * Action to add AI co-author to commit messages
- *
- * @description Provides a button in the VCS commit dialog to add Claude as a
- *              co-author using the standard Git co-authored-by trailer format.
- *              This refactored version delegates business logic to service classes
- *              for better separation of concerns and testability.
- * @since 1.0.0
- */
-class GenerateCommitMessageAction :
-    AnAction(
-        "Add AI Co-Author",
-        "Add Claude as co-author to your commit message",
-        null,
-    ) {
-    private val aiCoAuthorService = AICoAuthorService()
+class GenerateCommitMessageAction : AnAction() {
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
 
-    /**
-     * Called when the action is performed (button clicked)
-     *
-     * @param e The action event containing project context
-     */
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
+        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
 
-        ApplicationManager.getApplication().invokeLater {
-            aiCoAuthorService.addAiCoAuthor(
-                onSuccess = {
-                    NotificationService.showSuccessNotification(project)
-                },
-                onFailure = { coAuthoredBy ->
-                    NotificationService.showWarningNotification(project, coAuthoredBy)
-                },
-                onError = { errorMessage ->
-                    NotificationService.showErrorNotification(project, errorMessage)
-                },
-            )
+        val commitMessageControl = e.getData(VcsDataKeys.COMMIT_MESSAGE_CONTROL)
+        val document = e.getData(VcsDataKeys.COMMIT_MESSAGE_DOCUMENT)
+
+        if (commitMessageControl == null || document == null) {
+            NotificationService.showWarningNotification(project, trailer)
+            return
         }
+
+        val currentText = document.text
+
+        if (currentText.contains(trailer)) {
+            return
+        }
+
+        commitMessageControl.setCommitMessage(buildCommitMessage(currentText, trailer))
+        NotificationService.showSuccessNotification(project)
     }
 
-    /**
-     * Controls when the action is available in the UI
-     *
-     * @param e The action event for context evaluation
-     */
     override fun update(e: AnActionEvent) {
-        val project = e.project
-        val presentation = e.presentation
+        e.presentation.isEnabledAndVisible = e.project != null
+    }
 
-        // Enable when we have a project with VCS enabled
-        presentation.isEnabledAndVisible = project != null &&
-            ChangeListManager.getInstance(project).areChangeListsEnabled()
+    companion object {
+        fun buildCommitMessage(
+            currentText: String,
+            trailer: String,
+        ): String =
+            if (currentText.trim().isEmpty()) {
+                trailer
+            } else {
+                "${currentText.trim()}\n\n$trailer"
+            }
     }
 }
