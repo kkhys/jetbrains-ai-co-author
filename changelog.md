@@ -1,6 +1,6 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# ai-co-author Changelog
+# Changelog
 
 ## [Unreleased]
 
