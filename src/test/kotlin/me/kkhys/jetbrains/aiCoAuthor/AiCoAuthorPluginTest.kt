@@ -326,8 +326,7 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
     /**
      * Simulates the duplicate prevention logic for testing
      */
-    private fun shouldAddCoAuthor(text: String): Boolean =
-        !text.contains("Co-Authored-By: Claude")
+    private fun shouldAddCoAuthor(text: String): Boolean = !text.contains("Co-Authored-By: Claude")
 
     /**
      * Simulates the text formatting logic for testing
