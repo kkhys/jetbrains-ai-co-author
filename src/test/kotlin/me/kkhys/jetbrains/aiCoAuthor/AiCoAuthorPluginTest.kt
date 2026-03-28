@@ -308,25 +308,26 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
     private fun isLikelyCommitMessageFieldSimulation(
         component: Any,
         text: String,
-    ): Boolean {
-        return when (component) {
+    ): Boolean =
+        when (component) {
             is EditorTextField -> {
-                component.isVisible && (text.isEmpty() || text.length < 1000)
+                component.isVisible &&
+                    (text.isEmpty() || text.length < 1000)
             }
             is JTextArea -> {
-                component.isVisible && component.isEditable && component.rows > 1 &&
+                component.isVisible &&
+                    component.isEditable &&
+                    component.rows > 1 &&
                     (text.isEmpty() || text.length < 1000)
             }
             else -> false
         }
-    }
 
     /**
      * Simulates the duplicate prevention logic for testing
      */
-    private fun shouldAddCoAuthor(text: String): Boolean {
-        return !text.contains("Co-Authored-By: Claude")
-    }
+    private fun shouldAddCoAuthor(text: String): Boolean =
+        !text.contains("Co-Authored-By: Claude")
 
     /**
      * Simulates the text formatting logic for testing
@@ -334,11 +335,10 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
     private fun formatUpdatedText(
         currentText: String,
         coAuthoredBy: String,
-    ): String {
-        return if (currentText.trim().isEmpty()) {
+    ): String =
+        if (currentText.trim().isEmpty()) {
             coAuthoredBy
         } else {
             "${currentText.trim()}\n\n$coAuthoredBy"
         }
-    }
 }
