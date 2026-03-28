@@ -71,8 +71,8 @@ class CommitMessageFieldFinder {
      * @param component The component to evaluate
      * @return true if the component appears to be a commit message field
      */
-    private fun isLikelyCommitMessageField(component: Component): Boolean {
-        return when (component) {
+    private fun isLikelyCommitMessageField(component: Component): Boolean =
+        when (component) {
             is EditorTextField -> {
                 val text = component.text
                 component.isVisible &&
@@ -87,7 +87,6 @@ class CommitMessageFieldFinder {
             }
             else -> false
         }
-    }
 
     /**
      * Gets the current text from a text component
@@ -95,13 +94,12 @@ class CommitMessageFieldFinder {
      * @param component The text component
      * @return The current text content, or empty string if invalid component
      */
-    fun getTextFromComponent(component: Component): String {
-        return when (component) {
+    fun getTextFromComponent(component: Component): String =
+        when (component) {
             is EditorTextField -> component.text
             is JTextArea -> component.text ?: ""
             else -> ""
         }
-    }
 
     /**
      * Sets text in a text component
@@ -113,8 +111,8 @@ class CommitMessageFieldFinder {
     fun setTextInComponent(
         component: Component,
         text: String,
-    ): Boolean {
-        return try {
+    ): Boolean =
+        try {
             when (component) {
                 is EditorTextField -> {
                     component.text = text
@@ -129,5 +127,4 @@ class CommitMessageFieldFinder {
         } catch (e: Exception) {
             false
         }
-    }
 }

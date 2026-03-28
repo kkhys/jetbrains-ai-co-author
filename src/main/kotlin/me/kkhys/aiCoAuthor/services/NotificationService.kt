@@ -19,11 +19,12 @@ object NotificationService {
      * @param project The current project context
      */
     fun showSuccessNotification(project: Project) {
-        getNotificationGroup().createNotification(
-            "AI Co-Author Added",
-            "Claude has been added as co-author to your commit message.",
-            NotificationType.INFORMATION,
-        ).notify(project)
+        getNotificationGroup()
+            .createNotification(
+                "AI Co-Author Added",
+                "Claude has been added as co-author to your commit message.",
+                NotificationType.INFORMATION,
+            ).notify(project)
     }
 
     /**
@@ -36,11 +37,12 @@ object NotificationService {
         project: Project,
         coAuthoredBy: String,
     ) {
-        getNotificationGroup().createNotification(
-            "Could not add AI Co-Author automatically",
-            "Please manually add: $coAuthoredBy to your commit message.",
-            NotificationType.WARNING,
-        ).notify(project)
+        getNotificationGroup()
+            .createNotification(
+                "Could not add AI Co-Author automatically",
+                "Please manually add: $coAuthoredBy to your commit message.",
+                NotificationType.WARNING,
+            ).notify(project)
     }
 
     /**
@@ -53,11 +55,12 @@ object NotificationService {
         project: Project,
         error: String,
     ) {
-        getNotificationGroup().createNotification(
-            "AI Co-Author Error",
-            "An error occurred: $error",
-            NotificationType.ERROR,
-        ).notify(project)
+        getNotificationGroup()
+            .createNotification(
+                "AI Co-Author Error",
+                "An error occurred: $error",
+                NotificationType.ERROR,
+            ).notify(project)
     }
 
     /**
@@ -66,6 +69,7 @@ object NotificationService {
      * @return The notification group instance
      */
     private fun getNotificationGroup() =
-        NotificationGroupManager.getInstance()
+        NotificationGroupManager
+            .getInstance()
             .getNotificationGroup(CoAuthorConfig.NOTIFICATION_GROUP_ID)
 }

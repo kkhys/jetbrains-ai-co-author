@@ -66,13 +66,12 @@ class AICoAuthorService {
     private fun buildUpdatedCommitMessage(
         currentText: String,
         coAuthoredBy: String,
-    ): String {
-        return if (currentText.trim().isEmpty()) {
+    ): String =
+        if (currentText.trim().isEmpty()) {
             coAuthoredBy
         } else {
             "${currentText.trim()}\n\n$coAuthoredBy"
         }
-    }
 
     /**
      * Checks if a commit message already contains an AI co-author
@@ -80,16 +79,13 @@ class AICoAuthorService {
      * @param commitMessage The commit message to check
      * @return true if the message already contains a Claude co-author
      */
-    fun hasAiCoAuthor(commitMessage: String): Boolean {
-        return commitMessage.contains("Co-Authored-By: Claude", ignoreCase = true)
-    }
+    fun hasAiCoAuthor(commitMessage: String): Boolean =
+        commitMessage.contains("Co-Authored-By: Claude", ignoreCase = true)
 
     /**
      * Gets the standard AI co-author trailer
      *
      * @return The formatted co-authored-by trailer string
      */
-    fun getCoAuthorTrailer(): String {
-        return CoAuthorConfig.getCoAuthoredByTrailer()
-    }
+    fun getCoAuthorTrailer(): String = CoAuthorConfig.getCoAuthoredByTrailer()
 }
