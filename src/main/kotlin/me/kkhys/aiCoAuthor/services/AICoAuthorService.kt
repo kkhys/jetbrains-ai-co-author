@@ -79,8 +79,7 @@ class AICoAuthorService {
      * @param commitMessage The commit message to check
      * @return true if the message already contains a Claude co-author
      */
-    fun hasAiCoAuthor(commitMessage: String): Boolean =
-        commitMessage.contains("Co-Authored-By: Claude", ignoreCase = true)
+    fun hasAiCoAuthor(commitMessage: String): Boolean = commitMessage.contains("Co-Authored-By: Claude", ignoreCase = true)
 
     /**
      * Gets the standard AI co-author trailer
