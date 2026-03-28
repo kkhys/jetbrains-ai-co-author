@@ -3,8 +3,8 @@ package me.kkhys.jetbrains.aiCoAuthor
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.ui.EditorTextField
-import me.kkhys.jetbrains.aiCoAuthor.actions.GenerateCommitMessageAction
-import me.kkhys.jetbrains.aiCoAuthor.vcs.CommitMessageAiAssistant
+import me.kkhys.aiCoAuthor.actions.GenerateCommitMessageAction
+import me.kkhys.aiCoAuthor.vcs.CommitMessageAiAssistant
 import javax.swing.JTextArea
 
 /**
@@ -48,7 +48,7 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
     fun testGenerateCommitMessageActionInitialization() {
         val presentation = generateCommitMessageAction.templatePresentation
 
-        assertEquals("🤖 Add AI Co-Author", presentation.text)
+        assertEquals("Add AI Co-Author", presentation.text)
         assertEquals("Add Claude as co-author to your commit message", presentation.description)
         assertNull("Icon should be null", presentation.icon)
     }
@@ -238,7 +238,7 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
         val action = GenerateCommitMessageAction()
         val presentation = action.templatePresentation
 
-        assertEquals("Action text should be correct", "🤖 Add AI Co-Author", presentation.text)
+        assertEquals("Action text should be correct", "Add AI Co-Author", presentation.text)
         assertEquals(
             "Action description should be correct",
             "Add Claude as co-author to your commit message",
