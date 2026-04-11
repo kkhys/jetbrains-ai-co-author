@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
-    id("org.jlleitschuh.gradle.ktlint") version "13.1.0" // Ktlint Plugin
+    id("org.jlleitschuh.gradle.ktlint") version "14.2.0" // Ktlint Plugin
 }
 
 group = providers.gradleProperty("pluginGroup").get()
