@@ -1,6 +1,7 @@
 package me.kkhys.aiCoAuthor
 
 import com.intellij.openapi.actionSystem.ActionManager
+import com.intellij.openapi.actionSystem.ActionUiKind
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -11,8 +12,6 @@ import com.intellij.openapi.editor.EditorFactory
 import com.intellij.openapi.vcs.CommitMessageI
 import com.intellij.openapi.vcs.VcsDataKeys
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
-import me.kkhys.aiCoAuthor.actions.GenerateCommitMessageAction
-import me.kkhys.aiCoAuthor.config.CoAuthorConfig
 
 class AiCoAuthorPluginTest : BasePlatformTestCase() {
     fun testActionRegistration() {
@@ -56,6 +55,19 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
         action.actionPerformed(event)
     }
 
+    fun testActionPerformedShowsWarningWithoutDocument() {
+        val action = GenerateCommitMessageAction()
+        val messages = mutableListOf<String>()
+        val event =
+            createActionEvent(
+                withProject = true,
+                commitMessageControl = createCommitMessageControl(messages),
+                document = null,
+            )
+        action.actionPerformed(event)
+        assertTrue("Should not modify message when document is missing", messages.isEmpty())
+    }
+
     fun testActionPerformedAddsTrailer() {
         val action = GenerateCommitMessageAction()
         val document = EditorFactory.getInstance().createDocument("feat: add feature")
@@ -67,15 +79,13 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
                 document = document,
             )
         action.actionPerformed(event)
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
         assertEquals(1, messages.size)
-        assertEquals("feat: add feature\n\n$trailer", messages[0])
+        assertEquals("feat: add feature\n\n$COAUTHORED_BY_TRAILER", messages[0])
     }
 
     fun testActionPerformedSkipsWhenTrailerExists() {
         val action = GenerateCommitMessageAction()
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
-        val document = EditorFactory.getInstance().createDocument("feat: add feature\n\n$trailer")
+        val document = EditorFactory.getInstance().createDocument("feat: add feature\n\n$COAUTHORED_BY_TRAILER")
         val messages = mutableListOf<String>()
         val event =
             createActionEvent(
@@ -98,9 +108,8 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
                 document = document,
             )
         action.actionPerformed(event)
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
         assertEquals(1, messages.size)
-        assertEquals(trailer, messages[0])
+        assertEquals(COAUTHORED_BY_TRAILER, messages[0])
     }
 
     fun testActionPerformedReturnsWithoutProject() {
@@ -118,54 +127,37 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
     }
 
     fun testCoAuthoredByTrailerFormat() {
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
-        assertEquals("Co-Authored-By: Claude <noreply@anthropic.com>", trailer)
+        assertEquals("Co-Authored-By: Claude <noreply@anthropic.com>", COAUTHORED_BY_TRAILER)
         assertTrue(
             "Trailer should match Git Co-Authored-By format",
-            trailer.matches(Regex("Co-Authored-By: .+ <.+@.+>")),
+            COAUTHORED_BY_TRAILER.matches(Regex("Co-Authored-By: .+ <.+@.+>")),
         )
     }
 
-    fun testCoAuthoredByTrailerCustomValues() {
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer("GPT", "noreply@openai.com")
-        assertEquals("Co-Authored-By: GPT <noreply@openai.com>", trailer)
+    fun testAppendTrailerWithEmptyText() {
+        val result = GenerateCommitMessageAction.appendTrailer("")
+        assertEquals(COAUTHORED_BY_TRAILER, result)
     }
 
-    fun testBuildCommitMessageWithEmptyText() {
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
-        val result = GenerateCommitMessageAction.buildCommitMessage("", trailer)
-        assertEquals(trailer, result)
+    fun testAppendTrailerWithWhitespaceOnly() {
+        val result = GenerateCommitMessageAction.appendTrailer("   \n  \t  ")
+        assertEquals(COAUTHORED_BY_TRAILER, result)
     }
 
-    fun testBuildCommitMessageWithWhitespaceOnly() {
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
-        val result = GenerateCommitMessageAction.buildCommitMessage("   \n  \t  ", trailer)
-        assertEquals(trailer, result)
+    fun testAppendTrailerWithExistingText() {
+        val result = GenerateCommitMessageAction.appendTrailer("feat: add new feature")
+        assertEquals("feat: add new feature\n\n$COAUTHORED_BY_TRAILER", result)
     }
 
-    fun testBuildCommitMessageWithExistingText() {
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
-        val result = GenerateCommitMessageAction.buildCommitMessage("feat: add new feature", trailer)
-        assertEquals("feat: add new feature\n\n$trailer", result)
+    fun testAppendTrailerTrimsTrailingWhitespace() {
+        val result = GenerateCommitMessageAction.appendTrailer("feat: add new feature   \n  ")
+        assertEquals("feat: add new feature\n\n$COAUTHORED_BY_TRAILER", result)
     }
 
-    fun testBuildCommitMessageTrimsTrailingWhitespace() {
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
-        val result = GenerateCommitMessageAction.buildCommitMessage("feat: add new feature   \n  ", trailer)
-        assertEquals("feat: add new feature\n\n$trailer", result)
-    }
-
-    fun testBuildCommitMessageWithMultilineText() {
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
+    fun testAppendTrailerWithMultilineText() {
         val message = "feat: add feature\n\nDetailed description\nwith multiple lines"
-        val result = GenerateCommitMessageAction.buildCommitMessage(message, trailer)
-        assertEquals("$message\n\n$trailer", result)
-    }
-
-    fun testProjectInitialization() {
-        assertNotNull("Project should be initialized", project)
-        assertTrue("Project should be properly initialized", project.isInitialized)
-        assertFalse("Project should not be disposed", project.isDisposed)
+        val result = GenerateCommitMessageAction.appendTrailer(message)
+        assertEquals("$message\n\n$COAUTHORED_BY_TRAILER", result)
     }
 
     private fun createCommitMessageControl(messages: MutableList<String>): CommitMessageI =
@@ -187,6 +179,6 @@ class AiCoAuthorPluginTest : BasePlatformTestCase() {
                     else -> null
                 }
             }
-        return AnActionEvent.createFromDataContext("test", Presentation(), dataContext)
+        return AnActionEvent.createEvent(dataContext, Presentation(), "test", ActionUiKind.NONE, null)
     }
 }
