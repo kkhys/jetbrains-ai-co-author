@@ -1,35 +1,31 @@
-package me.kkhys.aiCoAuthor.actions
+package me.kkhys.aiCoAuthor
 
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.vcs.VcsDataKeys
-import me.kkhys.aiCoAuthor.config.CoAuthorConfig
-import me.kkhys.aiCoAuthor.services.NotificationService
+
+const val COAUTHORED_BY_TRAILER = "Co-Authored-By: Claude <noreply@anthropic.com>"
 
 class GenerateCommitMessageAction : AnAction() {
     override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
 
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
-        val trailer = CoAuthorConfig.getCoAuthoredByTrailer()
-
         val commitMessageControl = e.getData(VcsDataKeys.COMMIT_MESSAGE_CONTROL)
         val document = e.getData(VcsDataKeys.COMMIT_MESSAGE_DOCUMENT)
 
         if (commitMessageControl == null || document == null) {
-            NotificationService.showWarningNotification(project, trailer)
+            CommitNotifications.warnManualAdditionRequired(project)
             return
         }
 
-        val currentText = document.text
-
-        if (currentText.contains(trailer)) {
+        if (document.text.contains(COAUTHORED_BY_TRAILER)) {
             return
         }
 
-        commitMessageControl.setCommitMessage(buildCommitMessage(currentText, trailer))
-        NotificationService.showSuccessNotification(project)
+        commitMessageControl.setCommitMessage(appendTrailer(document.text))
+        CommitNotifications.notifyTrailerAdded(project)
     }
 
     override fun update(e: AnActionEvent) {
@@ -37,14 +33,9 @@ class GenerateCommitMessageAction : AnAction() {
     }
 
     companion object {
-        fun buildCommitMessage(
-            currentText: String,
-            trailer: String,
-        ): String =
-            if (currentText.trim().isEmpty()) {
-                trailer
-            } else {
-                "${currentText.trim()}\n\n$trailer"
-            }
+        fun appendTrailer(commitMessage: String): String {
+            val trimmed = commitMessage.trim()
+            return if (trimmed.isEmpty()) COAUTHORED_BY_TRAILER else "$trimmed\n\n$COAUTHORED_BY_TRAILER"
+        }
     }
 }
