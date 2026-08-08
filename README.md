@@ -1,22 +1,13 @@
 # AI Co-Author
 
-![Build](https://github.com/kkhys/jetbrains-ai-co-author/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/me.kkhys.aiCoauthor.svg)](https://plugins.jetbrains.com/plugin/me.kkhys.aiCoauthor)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/me.kkhys.aiCoauthor.svg)](https://plugins.jetbrains.com/plugin/me.kkhys.aiCoauthor)
+> [!IMPORTANT]
+> This project has been discontinued and is no longer maintained. The plugin has been removed from JetBrains Marketplace and will not receive further updates. Existing installations continue to work, and manual installation from [Releases](https://github.com/kkhys/jetbrains-ai-co-author/releases/latest) is still possible.
 
 <!-- Plugin description -->
 A JetBrains IDE plugin that adds a button to the commit dialog for appending `Co-Authored-By: Claude <noreply@anthropic.com>` to your commit messages.
 <!-- Plugin description end -->
 
 ## Installation
-
-### JetBrains Marketplace
-
-1. Settings/Preferences > Plugins > Marketplace
-2. Search for "AI Co-Author"
-3. Install and restart
-
-### Manual
 
 1. Download from [Releases](https://github.com/kkhys/jetbrains-ai-co-author/releases/latest)
 2. Settings/Preferences > Plugins > Install Plugin from Disk...
